@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: jewellery-api
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/jewellery_marketplace
+    username: postgres
+    password: manager
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+server:
+  port: 8080
+    
