@@ -29,11 +29,25 @@ public class Shop {
     @Column(nullable = false)
     private String city;
 
+    @Column(nullable = false)
+    private String addressLine;
+
+    @Column(nullable = false)
+    private String state;
+
+    @Column(nullable = false)
+    private String pincode;
+
+    @Column(nullable = false)
+    private String phone;
+
+    @Column(name = "is_verified", nullable = false)
+    private boolean verified;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
     @OneToMany(mappedBy = "shop")
     private List<Product> products = new ArrayList<>();
-
 }

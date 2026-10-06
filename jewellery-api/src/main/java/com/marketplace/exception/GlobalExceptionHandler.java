@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
 import java.util.Map;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -32,6 +33,31 @@ public class GlobalExceptionHandler {
                 "timestamp", LocalDateTime.now(),
                 "status", 409,
                 "message", ex.getMessage()
+        );
+    }
+
+    @ExceptionHandler(
+            org.springframework.web.bind.MethodArgumentNotValidException.class
+    )
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, Object> handleValidation(
+            org.springframework.web.bind.MethodArgumentNotValidException ex) {
+
+        Map<String, String> errors = new java.util.HashMap<>();
+
+        ex.getBindingResult()
+                .getFieldErrors()
+                .forEach(error ->
+                        errors.put(
+                                error.getField(),
+                                error.getDefaultMessage()
+                        )
+                );
+
+        return Map.of(
+                "status", 400,
+                "message", "Validation failed",
+                "errors", errors
         );
     }
 }
