@@ -1,7 +1,6 @@
 package com.marketplace.service;
 
 
-import com.marketplace.config.PasswordConfig;
 import com.marketplace.dto.request.UserCreateRequest;
 import com.marketplace.dto.response.UserResponse;
 import com.marketplace.entity.User;
@@ -10,6 +9,7 @@ import com.marketplace.exception.DuplicateResourceException;
 import com.marketplace.exception.ResourceNotFoundException;
 import com.marketplace.mapper.UserMapper;
 import com.marketplace.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,13 +18,13 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final PasswordConfig passwordencoder;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, PasswordConfig passwordencoder, UserMapper userMapper) {
+    public UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.passwordencoder = passwordencoder;
         this.userMapper = userMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UserResponse createuser(UserCreateRequest request) {
@@ -34,7 +34,7 @@ public class UserService {
         User user = User.builder().name(request.getName())
                 .email(request.getEmail())
                 .phone(request.getPhone())
-                .password_hash(passwordencoder.passwordEncoder(request.getPassword()).toString())
+                .password_hash(passwordEncoder.encode(request.getPassword()))
                 .role(UserRole.CUSTOMER)
                 .build();
         User savedUser = userRepository.save(user);
