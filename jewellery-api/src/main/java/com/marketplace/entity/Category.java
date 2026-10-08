@@ -17,7 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 public class Category {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,15 +24,14 @@ public class Category {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @Column(nullable = false)
+    @Column
     private String description;
 
-    @Column(nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
     private Category parent;
 
-
     @OneToMany(mappedBy = "category")
-    private List<Product> products = new ArrayList();
-
-
+    @Builder.Default
+    private List<Product> products = new ArrayList<>();
 }
