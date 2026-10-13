@@ -53,14 +53,12 @@ public class ShopService {
     }
 
     public List<ShopResponse> getAllShops() {
-        return shopRepository.findAll().stream()
-                .map(shopMapper::toResponse)
-                .toList();
+        List<Shop> shops = shopRepository.findAll();
+        return shopMapper.toResponse(shops);
     }
 
     public List<ShopResponse> getShopsByCity(String city) {
-        return shopRepository.findByCityIgnoreCase(city).stream()
-                .map(shopMapper::toResponse)
-                .toList();
+        List<Shop> shops = shopRepository.findByCityIgnoreCase(city);
+        return shopMapper.toResponse(shops);
     }
 }
