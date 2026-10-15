@@ -34,7 +34,7 @@ public class UserService {
         User user = User.builder().name(request.getName())
                 .email(request.getEmail())
                 .phone(request.getPhone())
-                .password_hash(passwordEncoder.encode(request.getPassword()))
+                .passwordHash(passwordEncoder.encode(request.getPassword()))
                 .role(UserRole.CUSTOMER)
                 .build();
         User savedUser = userRepository.save(user);
