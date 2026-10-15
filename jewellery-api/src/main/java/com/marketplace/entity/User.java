@@ -28,8 +28,8 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
-    private String password_hash;
+    @Column(name = "password_hash", nullable = false)
+    private String passwordHash;
 
     @Column(nullable = false)
     private String phone;
