@@ -1,14 +1,14 @@
 package com.marketplace.controller;
 
 import com.marketplace.dto.request.LoginRequest;
+import com.marketplace.dto.request.SellerRegistrationRequest;
 import com.marketplace.dto.response.AuthResponse;
 import com.marketplace.service.AuthService;
 import com.marketplace.service.SellerRegistrationService;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -25,5 +25,13 @@ public class AuthController {
     @PostMapping("/login")
     public AuthResponse login(@Valid @RequestBody LoginRequest request) {
         return authService.login(request);
+    }
+
+    @PostMapping("/register-seller")
+    @ResponseStatus(org.springframework.http.HttpStatus.CREATED)
+    public Map<String, String> registerSeller(@Valid @RequestBody SellerRegistrationRequest request) {
+        String message =
+                sellerRegistrationService.registerSeller(request);
+        return Map.of("message", message);
     }
 }
