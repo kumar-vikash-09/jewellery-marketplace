@@ -23,4 +23,9 @@ server:
 jwt:
   secret: 8f4c9e7a2b1d6e5f8a3c9d7b4e2f6a1c8d5e9b7a3f6c2d8e4b1a9f7c5d3e2
   expiration: 86400000
+
+app:
+  bootstrap-admin:
+    email: ${ADMIN_EMAIL:mevikashgupta1999@gmail.com}
+    password: ${ADMIN_PASSWORD:Qwerty@123}
     
